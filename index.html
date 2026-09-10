@@ -116,6 +116,60 @@ html[lang="ar"] .case-body h3{letter-spacing:0;}
 .case-link:hover{color:var(--accent);}
 .cases-empty{padding:60px 0; text-align:center; color:var(--ink-faint);}
 
+
+/* ============ CASE MODAL — exact Portfolio Project treatment ============ */
+.modal-overlay{
+  position:fixed; inset:0; background:rgba(21,24,26,.6); backdrop-filter:blur(4px);
+  display:none; align-items:center; justify-content:center; z-index:200; padding:24px;
+}
+.modal-overlay.open{display:flex;}
+.modal-box{
+  background:var(--bg); border-radius:30px; max-width:1100px; width:100%;
+  max-height:88vh; overflow:auto; padding:46px; position:relative;
+}
+.modal-close{position:absolute; top:20px; right:20px; width:36px; height:36px; border-radius:50%; background:var(--surface); display:flex; align-items:center; justify-content:center; font-size:22px; z-index:4;}
+.modal-box .modal-kicker{font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+.modal-box .modal-title{font-size:clamp(30px,4vw,52px);line-height:.98;letter-spacing:-.055em;margin-bottom:28px;max-width:760px;}
+.case-visuals{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:0 0 34px;}
+.case-panel{background:#0a0a0a;border:1px solid #242424;border-radius:18px;overflow:hidden;min-height:330px;position:relative;}
+.case-panel-head{height:48px;padding:0 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #292929;color:#fff;}
+.case-panel-head span:first-child{font:500 10px var(--mono);letter-spacing:.08em;color:#aaa;text-transform:uppercase;}
+.case-panel-head span:last-child{font:500 10px var(--mono);color:var(--accent);}
+.case-asset{height:calc(100% - 48px);min-height:280px;position:relative;background:#101010;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:24px;}
+.case-brief-grid{width:100%;display:grid;gap:12px;}
+.case-brief-item{border:1px solid #292929;background:#151515;border-radius:12px;padding:14px 15px;}
+.case-brief-item small{display:block;font:500 9px var(--mono);color:#777;text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px;}
+.case-brief-item strong{display:block;color:#fff;font:600 15px var(--sans);line-height:1.35;}
+.case-brief-item p{color:#a8a49b;font-size:13px;line-height:1.55;}
+.case-file-list{display:grid;gap:10px;width:100%;}
+.case-file-link{display:flex;align-items:center;gap:12px;background:#151515;color:#fff;border:1px solid #292929;border-radius:12px;padding:13px 14px;text-decoration:none;}
+.case-file-link:hover{border-color:var(--accent);background:#1a1a1a;}
+.case-file-icon{width:38px;height:38px;border-radius:10px;background:#1d1d1d;display:grid;place-items:center;flex:0 0 38px;}
+.case-file-link strong{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.case-file-link small{display:block;color:#777;font:500 9px var(--mono);text-transform:uppercase;margin-top:3px;}
+.case-no-files{color:#777;font:500 10px var(--mono);text-transform:uppercase;letter-spacing:.05em;text-align:center;}
+.modal-content-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;}
+.modal-copy{padding-top:2px;}
+.modal-box h4{font-size:14px;margin:22px 0 8px;color:var(--accent);font-family:var(--mono);text-transform:uppercase;letter-spacing:.03em;}
+.modal-box h4:first-child{margin-top:0;}
+.modal-box p{color:var(--ink-soft);font-size:14.5px;line-height:1.6;}
+.case-tags-modal{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 26px;}
+.case-tags-modal .tag{color:var(--ink-soft);border-color:var(--line);}
+.case-modal-share{display:inline-flex;align-items:center;gap:8px;margin:0 0 20px;padding:10px 14px;border:1px solid var(--line);border-radius:999px;background:transparent;color:inherit;font:600 12px var(--mono);cursor:pointer;}
+.case-modal-share:hover{background:var(--accent-soft);border-color:var(--accent);transform:translateY(-1px);}
+@media(max-width:760px){
+  .modal-box{padding:28px!important;border-radius:20px!important;}
+  .case-visuals,.modal-content-grid{grid-template-columns:1fr;}
+  .case-panel{min-height:280px;}
+  .case-asset{min-height:230px;}
+  .modal-box .modal-title{font-size:36px;}
+}
+html[dir="rtl"] .modal-close{right:auto;left:20px;}
+html[dir="rtl"] .modal-box .modal-title{letter-spacing:normal;line-height:1.3;}
+html[dir="rtl"] .modal-kicker,html[dir="rtl"] .case-panel-head span,html[dir="rtl"] .case-brief-item small,html[dir="rtl"] .case-file-link small{letter-spacing:normal;text-transform:none;}
+[data-theme="dark"] .modal-box{background:var(--bg)!important;}
+[data-theme="dark"] .modal-close{background:var(--surface);}
+
 /* ============ APPROACH / GOALS (identical treatment to the "My Approach" section) ============ */
 #approach{background:#f4f2ec;}
 [data-theme="dark"] #approach{background:var(--bg);}
@@ -143,7 +197,7 @@ html[lang="ar"] .footer-brand{font-family:'Cairo', var(--sans);}
 .reveal{opacity:0; transform:translateY(18px); transition:opacity .6s ease,transform .6s ease;}
 .reveal.in{opacity:1; transform:none;}
 </style>
-<meta name="theme-color" content="#050505"><script>if("serviceWorker" in navigator){navigator.serviceWorker.register("/sw.js").catch(function(){});}</script></head>
+<meta name="theme-color" content="#050505"><script>if("serviceWorker" in navigator){navigator.serviceWorker.register("./sw.js").catch(function(){});}</script></head>
 <body>
 
 <header id="site-header">
@@ -218,6 +272,10 @@ html[lang="ar"] .footer-brand{font-family:'Cairo', var(--sans);}
   </div>
 </footer>
 
+<div class="modal-overlay" id="caseModalOverlay" aria-hidden="true">
+  <div class="modal-box" id="caseModalBox" role="dialog" aria-modal="true"></div>
+</div>
+
 <div class="mobile-menu" id="mobileMenu">
   <button class="mobile-close" id="mobileClose">✕</button>
   <a href="#cases" data-i18n="nav.cases">Cases</a>
@@ -275,29 +333,59 @@ function applyLang(lang){
 function applyTheme(theme){currentTheme=theme; document.documentElement.setAttribute('data-theme',theme); try{localStorage.setItem('site-theme',theme);}catch(e){}}
 
 var CASES=[];
+function esc(v){return String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
+function fileName(u){try{return decodeURIComponent(new URL(u,location.href).pathname.split('/').pop()||'File');}catch(e){return String(u||'').split('/').pop()||'File';}}
+function fileType(u){var n=fileName(u).toLowerCase();if(/\.xlsx?$/.test(n))return 'Excel';if(/\.pdf$/.test(n))return 'PDF';if(/\.pptx?$/.test(n))return 'PowerPoint';if(/\.docx?$/.test(n))return 'Word';if(/\.(zip|rar|7z)$/.test(n))return 'Archive';return 'File';}
+function caseText(c,key){var lang=currentLang;var v=lang==='ar'?c[key+'_ar']:c[key+'_en'];return String(v||'').trim();}
+function openCase(c){
+  if(!c)return;
+  var overlay=document.getElementById('caseModalOverlay'),box=document.getElementById('caseModalBox');
+  if(!overlay||!box)return;
+  var ar=currentLang==='ar';
+  var title=caseText(c,'title'),summary=caseText(c,'summary'),category=caseText(c,'category'),difficulty=caseText(c,'difficulty');
+  var scenario=caseText(c,'scenario')||summary;
+  var mission=caseText(c,'mission')||(ar?'حل الحالة كأنها طلب حقيقي من الإدارة.':'Work the case as if it were a real request from management.');
+  var data=caseText(c,'data')||(ar?'استخدم البيانات والافتراضات المتاحة في ملفات الحالة.':'Use the data and assumptions provided with the case files.');
+  var hints=caseText(c,'hints');
+  var solution=caseText(c,'solution');
+  var tags=(c.tags||[]).map(function(t){return '<span class="tag">'+esc(t)+'</span>';}).join('');
+  var files=Array.isArray(c.files)?c.files.filter(Boolean):[];
+  var fileHtml=files.length?files.map(function(u){return '<a class="case-file-link" href="'+esc(u)+'" target="_blank" rel="noopener"><span class="case-file-icon">📄</span><span style="min-width:0"><strong>'+esc(fileName(u))+'</strong><small>'+esc(fileType(u))+'</small></span><span style="margin-left:auto;color:var(--accent);font-size:18px">↗</span></a>';}).join(''):'<div class="case-no-files">'+(ar?'لا توجد ملفات مرفقة حاليًا':'No files attached yet')+'</div>';
+  var casePath=location.pathname+(location.pathname.endsWith('/')?'':'/')+'?case='+encodeURIComponent(c.slug);
+  box.innerHTML='<button class="modal-close" id="caseModalClose" aria-label="'+(ar?'إغلاق':'Close')+'">×</button>'+
+    '<div class="modal-kicker">'+esc(category)+(difficulty?' · '+esc(difficulty):'')+'</div>'+
+    '<h3 class="modal-title">'+esc(title)+'</h3>'+
+    '<button type="button" class="case-modal-share" id="caseModalShare">⧉ '+(ar?'نسخ رابط الحالة':'Copy case link')+'</button>'+
+    '<div class="case-tags-modal">'+tags+'</div>'+
+    '<div class="case-visuals">'+
+      '<div class="case-panel"><div class="case-panel-head"><span>'+(ar?'ملخص الحالة':'CASE BRIEF')+'</span><span>01</span></div><div class="case-asset"><div class="case-brief-grid"><div class="case-brief-item"><small>'+(ar?'السيناريو':'Business Scenario')+'</small><p>'+esc(scenario)+'</p></div><div class="case-brief-item"><small>'+(ar?'المهمة':'Your Mission')+'</small><p>'+esc(mission)+'</p></div></div></div></div>'+ 
+      '<div class="case-panel"><div class="case-panel-head"><span>'+(ar?'البيانات والملفات':'CASE MATERIALS')+'</span><span>02</span></div><div class="case-asset"><div class="case-brief-grid"><div class="case-brief-item"><small>'+(ar?'البيانات':'Data Provided')+'</small><p>'+esc(data)+'</p></div><div class="case-file-list">'+fileHtml+'</div></div></div></div>'+ 
+    '</div>'+ 
+    '<div class="modal-content-grid">'+
+      '<div class="modal-copy"><h4>'+(ar?'السيناريو':'Business Scenario')+'</h4><p>'+esc(scenario)+'</p><h4>'+(ar?'مهمتك':'Your Mission')+'</h4><p>'+esc(mission)+'</p><h4>'+(ar?'البيانات':'Data Provided')+'</h4><p>'+esc(data)+'</p></div>'+ 
+      '<div class="modal-copy"><h4>'+(ar?'التلميحات':'Hints')+'</h4><p>'+esc(hints||(ar?'التلميحات ستظهر هنا عند إضافتها من لوحة التحكم.':'Hints will appear here when added from the dashboard.'))+'</p><h4>'+(ar?'الحل':'Solution')+'</h4><p>'+esc(solution||(ar?'الحل سيظهر هنا عند إضافته من لوحة التحكم.':'The guided solution will appear here when added from the dashboard.'))+'</p></div>'+ 
+    '</div>';
+  overlay.classList.add('open');overlay.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';
+  document.getElementById('caseModalClose').addEventListener('click',closeCase);
+  var share=document.getElementById('caseModalShare');
+  if(share)share.addEventListener('click',async function(){var url=location.origin+casePath;try{await navigator.clipboard.writeText(url);}catch(e){var ta=document.createElement('textarea');ta.value=url;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();}var old=share.textContent;share.textContent=ar?'✓ تم نسخ الرابط':'✓ Link copied';setTimeout(function(){share.textContent=old;},1800);});
+}
+function closeCase(){var overlay=document.getElementById('caseModalOverlay');if(overlay){overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');}document.body.style.overflow='';}
 function renderCases(){
-  var grid=document.getElementById('casesGrid');
-  if(!grid) return;
-  if(!CASES.length){grid.innerHTML='<div class="cases-empty">'+(currentLang==='ar'?'الحالات قريبًا...':'Cases coming soon...')+'</div>'; return;}
+  var grid=document.getElementById('casesGrid');if(!grid)return;
+  if(!CASES.length){grid.innerHTML='<div class="cases-empty">'+(currentLang==='ar'?'الحالات قريبًا...':'Cases coming soon...')+'</div>';return;}
   var lang=currentLang;
   grid.innerHTML=CASES.map(function(c,i){
     var title=lang==='ar'?c.title_ar:c.title_en;
     var summary=lang==='ar'?c.summary_ar:c.summary_en;
     var category=lang==='ar'?c.category_ar:c.category_en;
     var difficulty=lang==='ar'?c.difficulty_ar:c.difficulty_en;
-    var tags=(c.tags||[]).slice(0,4).map(function(t){return '<span class="tag">'+t+'</span>';}).join('');
+    var tags=(c.tags||[]).slice(0,4).map(function(t){return '<span class="tag">'+esc(t)+'</span>';}).join('');
     var startLabel=translations['case.start'][lang];
-    var arrow = lang==='ar' ? '←' : '↗';
-    return '<a class="case-card" href="/case/'+c.slug+'">'+
-      '<div class="case-visual" data-index="'+String(i+1).padStart(2,'0')+'"><div class="badge-row"><span class="badge badge-accent">'+difficulty+'</span></div></div>'+
-      '<div class="case-body">'+
-        '<span class="case-cat">'+category+'</span>'+
-        '<h3>'+title+'</h3>'+
-        '<p>'+summary+'</p>'+
-        '<div class="tag-row">'+tags+'</div>'+
-        '<span class="case-link">'+startLabel+' <span class="icon-arrow">'+arrow+'</span></span>'+
-      '</div>'+
-    '</a>';
+    var arrow=lang==='ar'?'←':'↗';
+    return '<a class="case-card" href="#case/'+encodeURIComponent(c.slug)+'" data-case-slug="'+esc(c.slug)+'">'+
+      '<div class="case-visual" data-index="'+String(i+1).padStart(2,'0')+'"><div class="badge-row"><span class="badge badge-accent">'+esc(difficulty)+'</span></div></div>'+
+      '<div class="case-body"><span class="case-cat">'+esc(category)+'</span><h3>'+esc(title)+'</h3><p>'+esc(summary)+'</p><div class="tag-row">'+tags+'</div><span class="case-link">'+esc(startLabel)+' <span class="icon-arrow">'+arrow+'</span></span></div></a>';
   }).join('');
 }
 
@@ -331,6 +419,10 @@ document.addEventListener('DOMContentLoaded', function(){
   var io = new IntersectionObserver(function(entries){
     entries.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('in'); });
   }, {threshold:.12});
+  document.querySelectorAll('[data-case-slug]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();var slug=a.getAttribute('data-case-slug');var row=CASES.find(function(x){return String(x.slug)===String(slug);});if(row)openCase(row);});});
+  var overlay=document.getElementById('caseModalOverlay');
+  if(overlay)overlay.addEventListener('click',function(e){if(e.target===overlay)closeCase();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeCase();});
   document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
 });
 </script>
