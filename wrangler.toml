@@ -1,9 +1,12 @@
-name="case-lab"
-compatibility_date="2026-09-06"
-pages_build_output_dir="./public"
+name = "case-lab"
+compatibility_date = "2026-09-06"
 
-# Production D1:
-# [[d1_databases]]
-# binding="DB"
-# database_name="case-lab-db"
-# database_id="PUT-CASE-LAB-D1-ID-HERE"
+[[d1_databases]]
+binding = "DB"
+database_name = "case-lab-db"
+database_id = "81315fca-bf5f-4b00-bbc1-eb6bcad84142"
+
+[assets]
+directory = "./"
+binding = "ASSETS"
+run_worker_first = ["/api/*"]
