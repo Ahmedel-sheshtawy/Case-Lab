@@ -62,7 +62,20 @@ function mapRow(r){
   const parse=v=>{try{return JSON.parse(v||'[]')}catch(e){return[]}};
   return {...r,tags:parse(r.tags),files:parse(r.files),published:!!r.published};
 }
+async function ensureSchema(env){
+  await env.DB.prepare(`CREATE TABLE IF NOT EXISTS cases (
+    id INTEGER PRIMARY KEY AUTOINCREMENT, slug TEXT UNIQUE NOT NULL,
+    title_en TEXT NOT NULL, title_ar TEXT DEFAULT '', summary_en TEXT DEFAULT '', summary_ar TEXT DEFAULT '',
+    category_en TEXT DEFAULT '', category_ar TEXT DEFAULT '', difficulty_en TEXT DEFAULT 'Intermediate', difficulty_ar TEXT DEFAULT 'متوسط',
+    tags TEXT DEFAULT '[]', scenario_en TEXT DEFAULT '', scenario_ar TEXT DEFAULT '', mission_en TEXT DEFAULT '', mission_ar TEXT DEFAULT '',
+    data_en TEXT DEFAULT '', data_ar TEXT DEFAULT '', hints_en TEXT DEFAULT '', hints_ar TEXT DEFAULT '',
+    solution_en TEXT DEFAULT '', solution_ar TEXT DEFAULT '', files TEXT DEFAULT '[]',
+    published INTEGER NOT NULL DEFAULT 1, sort_order INTEGER NOT NULL DEFAULT 0,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP, updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+  )`).run();
+}
 async function ensureSeed(env){
+  await ensureSchema(env);
   const count=await env.DB.prepare('SELECT COUNT(*) AS n FROM cases').first();
   if(Number(count?.n||0)>0)return;
   const seed=[
@@ -82,7 +95,17 @@ async function ensureSeed(env){
 export default {
   async fetch(request, env){
     const url=new URL(request.url);
-    if(url.pathname==='/admin' || url.pathname==='/admin/') return env.ASSETS.fetch(new Request(new URL('/admin.html', request.url), request));
+    if(url.pathname==='/admin' || url.pathname==='/admin/' || url.pathname.toLowerCase()==='/admin.html'){
+      const assetURL=new URL('/admin/index.html',request.url);
+      const res=await env.ASSETS.fetch(new Request(assetURL.toString(), {method:'GET', headers:request.headers}));
+      if(res.status===404){
+        const fallbackURL=new URL('/admin.html',request.url);
+        return env.ASSETS.fetch(new Request(fallbackURL.toString(), {method:'GET', headers:request.headers}));
+      }
+      const headers=new Headers(res.headers);
+      headers.set('cache-control','no-store, no-cache, must-revalidate');
+      return new Response(res.body,{status:res.status,statusText:res.statusText,headers});
+    }
     if(!url.pathname.startsWith('/api/')) return env.ASSETS.fetch(request);
     try{
       const path=url.pathname;

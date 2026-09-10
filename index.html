@@ -96,7 +96,6 @@ html[lang="ar"] .brand{font-family:'Cairo', var(--sans);}
 .cases-grid{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px;}
 @media(max-width:900px){.cases-grid{grid-template-columns:1fr;}}
 .case-card{display:grid; grid-template-columns:1fr; border-radius:22px; overflow:hidden; background:#0b0b0b; color:#fff; min-height:460px; transition:transform .35s,box-shadow .35s;}
-.case-card{border:0;width:100%;padding:0;text-align:left;font:inherit;cursor:pointer;}
 .case-card:hover{transform:translateY(-5px); box-shadow:0 30px 70px rgba(0,0,0,.16);}
 .case-visual{background:linear-gradient(145deg,#151515,#070707); min-height:230px; padding:30px; position:relative; overflow:hidden; display:flex; align-items:flex-end;}
 .case-visual::before{content:""; position:absolute; width:280px; height:280px; border:1px solid rgba(255,77,0,.35); border-radius:50%; right:-90px; top:-90px;}
@@ -374,39 +373,42 @@ function openCase(c){
 function closeCase(){var overlay=document.getElementById('caseModalOverlay');if(overlay){overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');}document.body.style.overflow='';}
 function renderCases(){
   var grid=document.getElementById('casesGrid');if(!grid)return;
-  if(!CASES.length){grid.innerHTML='<div class="cases-empty">'+(currentLang==='ar'?'لا توجد حالات منشورة حاليًا.':'No published cases yet.')+'</div>';return;}
+  if(!CASES.length){grid.innerHTML='<div class="cases-empty">'+(currentLang==='ar'?'الحالات قريبًا...':'Cases coming soon...')+'</div>';return;}
   var lang=currentLang;
   grid.innerHTML=CASES.map(function(c,i){
-    var title=lang==='ar'?(c.title_ar||c.title_en):c.title_en;
-    var summary=lang==='ar'?(c.summary_ar||c.summary_en):c.summary_en;
-    var category=lang==='ar'?(c.category_ar||c.category_en):c.category_en;
-    var difficulty=lang==='ar'?(c.difficulty_ar||c.difficulty_en):c.difficulty_en;
+    var title=lang==='ar'?c.title_ar:c.title_en;
+    var summary=lang==='ar'?c.summary_ar:c.summary_en;
+    var category=lang==='ar'?c.category_ar:c.category_en;
+    var difficulty=lang==='ar'?c.difficulty_ar:c.difficulty_en;
     var tags=(c.tags||[]).slice(0,4).map(function(t){return '<span class="tag">'+esc(t)+'</span>';}).join('');
     var startLabel=translations['case.start'][lang];
     var arrow=lang==='ar'?'←':'↗';
-    return '<button type="button" class="case-card" data-case-slug="'+esc(c.slug)+'">'+
+    return '<a class="case-card" href="#case/'+encodeURIComponent(c.slug)+'" data-case-slug="'+esc(c.slug)+'">'+
       '<div class="case-visual" data-index="'+String(i+1).padStart(2,'0')+'"><div class="badge-row"><span class="badge badge-accent">'+esc(difficulty)+'</span></div></div>'+
       '<div class="case-body"><span class="case-cat">'+esc(category)+'</span><h3>'+esc(title)+'</h3><p>'+esc(summary)+'</p><div class="tag-row">'+tags+'</div><span class="case-link">'+esc(startLabel)+' <span class="icon-arrow">'+arrow+'</span></span></div></a>';
   }).join('');
-  grid.querySelectorAll('[data-case-slug]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();var slug=a.getAttribute('data-case-slug');var row=CASES.find(function(x){return String(x.slug)===String(slug);});if(row)openCase(row);});});
 }
 
 async function loadCases(){
-  var grid=document.getElementById('casesGrid');
+  var seed=[
+    {id:1,slug:'revenue-under-pressure',title_en:'Revenue Under Pressure',title_ar:'الإيرادات تحت الضغط',summary_en:'Diagnose a revenue slowdown, identify the key drivers, and build a management-ready view.',summary_ar:'حلل تباطؤ الإيرادات وحدد المحركات الرئيسية وابنِ رؤية مناسبة للإدارة.',category_en:'Revenue Analysis',category_ar:'تحليل الإيرادات',difficulty_en:'Intermediate',difficulty_ar:'متوسط',tags:['Revenue','Drivers','Analysis','FP&A'],published:true},
+    {id:2,slug:'profitability-deep-dive',title_en:'Profitability Deep Dive',title_ar:'تحليل الربحية بعمق',summary_en:'Sales are growing, but profit is not. Find the real margin drivers.',summary_ar:'المبيعات تنمو لكن الأرباح لا تتحرك بنفس الشكل. اكتشف الأسباب.',category_en:'Profitability',category_ar:'الربحية',difficulty_en:'Intermediate',difficulty_ar:'متوسط',tags:['Margins','Profitability','Excel'],published:true},
+    {id:3,slug:'build-the-fpa-plan',title_en:'Build the FP&A Plan',title_ar:'ابنِ خطة FP&A',summary_en:'Build a planning view from assumptions, budgets and forecasts.',summary_ar:'ابنِ رؤية تخطيطية من الافتراضات والميزانية والتوقعات.',category_en:'FP&A',category_ar:'التخطيط المالي',difficulty_en:'Advanced',difficulty_ar:'متقدم',tags:['FP&A','Budget','Forecast'],published:true},
+    {id:4,slug:'variance-analysis',title_en:'The Variance Story',title_ar:'قصة الانحرافات',summary_en:'Turn actual-vs-budget variance into a management-ready analysis.',summary_ar:'حوّل انحرافات الفعلي مقابل الموازنة إلى تحليل مناسب للإدارة.',category_en:'Management Reporting',category_ar:'تقارير الإدارة',difficulty_en:'Beginner',difficulty_ar:'مبتدئ',tags:['Variance','Reporting','Budget'],published:true},
+    {id:5,slug:'forecast-reset',title_en:'Reset the Forecast',title_ar:'أعد بناء التوقعات',summary_en:'Rebuild the forecast, challenge assumptions and explain the gap.',summary_ar:'أعد بناء التوقعات واختبر الافتراضات واشرح الفجوة.',category_en:'Forecasting',category_ar:'التنبؤ المالي',difficulty_en:'Advanced',difficulty_ar:'متقدم',tags:['Forecast','Scenario','FP&A'],published:true},
+    {id:6,slug:'business-performance-review',title_en:'Business Performance Review',title_ar:'مراجعة أداء الأعمال',summary_en:'Create an analyst-style performance review from business data.',summary_ar:'أنشئ مراجعة أداء بأسلوب المحلل المالي من بيانات الأعمال.',category_en:'Business Performance',category_ar:'أداء الأعمال',difficulty_en:'Intermediate',difficulty_ar:'متوسط',tags:['KPIs','Performance','Analysis'],published:true}
+  ];
   try{
-    var r=await fetch('/api/cases',{credentials:'same-origin'});
-    if(!r.ok)throw new Error('API unavailable');
-    var data=await r.json();
-    CASES=(data.cases||[]).filter(function(c){return c.published!==false;});
-    renderCases();
-  }catch(e){
-    CASES=[];
-    if(grid)grid.innerHTML='<div class="cases-empty">'+(currentLang==='ar'?'تعذر تحميل الحالات حاليًا.':'Unable to load cases right now.')+'</div>';
+    var r=await fetch('/api/cases',{cache:'no-store'});
+    if(r.ok){var d=await r.json();if(Array.isArray(d.cases)) CASES=d.cases;}
+  }catch(e){}
+  if(!Array.isArray(CASES)||!CASES.length){
+    try{var saved=localStorage.getItem('case-lab-cases');CASES=saved?JSON.parse(saved):seed;}catch(e){CASES=seed;}
   }
+  CASES=(CASES||[]).filter(function(c){return c.published!==false;});
+  renderCases();
 }
-loadCases().then(function(){
-  try{var slug=new URLSearchParams(location.search).get('case');if(slug){var row=CASES.find(function(x){return String(x.slug)===String(slug);});if(row)openCase(row);}}catch(e){}
-});
+loadCases();
 
 document.addEventListener('DOMContentLoaded', function(){
   applyLang(detectLang());
@@ -429,6 +431,7 @@ document.addEventListener('DOMContentLoaded', function(){
   var io = new IntersectionObserver(function(entries){
     entries.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('in'); });
   }, {threshold:.12});
+  document.querySelectorAll('[data-case-slug]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();var slug=a.getAttribute('data-case-slug');var row=CASES.find(function(x){return String(x.slug)===String(slug);});if(row)openCase(row);});});
   var overlay=document.getElementById('caseModalOverlay');
   if(overlay)overlay.addEventListener('click',function(e){if(e.target===overlay)closeCase();});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')closeCase();});
