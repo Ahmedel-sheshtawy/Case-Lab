@@ -96,6 +96,7 @@ html[lang="ar"] .brand{font-family:'Cairo', var(--sans);}
 .cases-grid{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px;}
 @media(max-width:900px){.cases-grid{grid-template-columns:1fr;}}
 .case-card{display:grid; grid-template-columns:1fr; border-radius:22px; overflow:hidden; background:#0b0b0b; color:#fff; min-height:460px; transition:transform .35s,box-shadow .35s;}
+.case-card{border:0;width:100%;padding:0;text-align:left;font:inherit;cursor:pointer;}
 .case-card:hover{transform:translateY(-5px); box-shadow:0 30px 70px rgba(0,0,0,.16);}
 .case-visual{background:linear-gradient(145deg,#151515,#070707); min-height:230px; padding:30px; position:relative; overflow:hidden; display:flex; align-items:flex-end;}
 .case-visual::before{content:""; position:absolute; width:280px; height:280px; border:1px solid rgba(255,77,0,.35); border-radius:50%; right:-90px; top:-90px;}
@@ -383,7 +384,7 @@ function renderCases(){
     var tags=(c.tags||[]).slice(0,4).map(function(t){return '<span class="tag">'+esc(t)+'</span>';}).join('');
     var startLabel=translations['case.start'][lang];
     var arrow=lang==='ar'?'←':'↗';
-    return '<a class="case-card" href="#case/'+encodeURIComponent(c.slug)+'" data-case-slug="'+esc(c.slug)+'">'+
+    return '<button type="button" class="case-card" data-case-slug="'+esc(c.slug)+'">'+
       '<div class="case-visual" data-index="'+String(i+1).padStart(2,'0')+'"><div class="badge-row"><span class="badge badge-accent">'+esc(difficulty)+'</span></div></div>'+
       '<div class="case-body"><span class="case-cat">'+esc(category)+'</span><h3>'+esc(title)+'</h3><p>'+esc(summary)+'</p><div class="tag-row">'+tags+'</div><span class="case-link">'+esc(startLabel)+' <span class="icon-arrow">'+arrow+'</span></span></div></a>';
   }).join('');
@@ -403,7 +404,9 @@ async function loadCases(){
     if(grid)grid.innerHTML='<div class="cases-empty">'+(currentLang==='ar'?'تعذر تحميل الحالات حاليًا.':'Unable to load cases right now.')+'</div>';
   }
 }
-loadCases();
+loadCases().then(function(){
+  try{var slug=new URLSearchParams(location.search).get('case');if(slug){var row=CASES.find(function(x){return String(x.slug)===String(slug);});if(row)openCase(row);}}catch(e){}
+});
 
 document.addEventListener('DOMContentLoaded', function(){
   applyLang(detectLang());

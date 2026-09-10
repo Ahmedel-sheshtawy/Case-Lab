@@ -82,6 +82,7 @@ async function ensureSeed(env){
 export default {
   async fetch(request, env){
     const url=new URL(request.url);
+    if(url.pathname==='/admin' || url.pathname==='/admin/') return env.ASSETS.fetch(new Request(new URL('/admin.html', request.url), request));
     if(!url.pathname.startsWith('/api/')) return env.ASSETS.fetch(request);
     try{
       const path=url.pathname;
