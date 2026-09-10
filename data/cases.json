@@ -1,0 +1,106 @@
+{
+  "cases": [
+    {
+      "slug": "revenue-under-pressure",
+      "title_en": "Revenue Under Pressure",
+      "title_ar": "الإيرادات تحت الضغط",
+      "summary_en": "Diagnose a revenue slowdown, identify the key drivers, and build a management-ready view.",
+      "summary_ar": "حلل تباطؤ الإيرادات وحدد المحركات الرئيسية وابنِ رؤية مناسبة للإدارة.",
+      "category_en": "Revenue Analysis",
+      "category_ar": "تحليل الإيرادات",
+      "difficulty_en": "Intermediate",
+      "difficulty_ar": "متوسط",
+      "tags": [
+        "Revenue",
+        "Drivers",
+        "Analysis",
+        "FP&A"
+      ],
+      "published": true
+    },
+    {
+      "slug": "profitability-deep-dive",
+      "title_en": "Profitability Deep Dive",
+      "title_ar": "تحليل الربحية بعمق",
+      "summary_en": "Sales are growing, but profit is not. Find the real margin drivers.",
+      "summary_ar": "المبيعات تنمو لكن الأرباح لا تتحرك بنفس الشكل. اكتشف الأسباب.",
+      "category_en": "Profitability",
+      "category_ar": "الربحية",
+      "difficulty_en": "Intermediate",
+      "difficulty_ar": "متوسط",
+      "tags": [
+        "Margins",
+        "Profitability",
+        "Excel"
+      ],
+      "published": true
+    },
+    {
+      "slug": "build-the-fpa-plan",
+      "title_en": "Build the FP&A Plan",
+      "title_ar": "ابنِ خطة FP&A",
+      "summary_en": "Build a planning view from assumptions, budgets and forecasts.",
+      "summary_ar": "ابنِ رؤية تخطيطية من الافتراضات والميزانية والتوقعات.",
+      "category_en": "FP&A",
+      "category_ar": "التخطيط المالي",
+      "difficulty_en": "Advanced",
+      "difficulty_ar": "متقدم",
+      "tags": [
+        "FP&A",
+        "Budget",
+        "Forecast"
+      ],
+      "published": true
+    },
+    {
+      "slug": "variance-analysis",
+      "title_en": "The Variance Story",
+      "title_ar": "قصة الانحرافات",
+      "summary_en": "Turn actual-vs-budget variance into a management-ready analysis.",
+      "summary_ar": "حوّل انحرافات الفعلي مقابل الموازنة إلى تحليل مناسب للإدارة.",
+      "category_en": "Management Reporting",
+      "category_ar": "تقارير الإدارة",
+      "difficulty_en": "Beginner",
+      "difficulty_ar": "مبتدئ",
+      "tags": [
+        "Variance",
+        "Reporting",
+        "Budget"
+      ],
+      "published": true
+    },
+    {
+      "slug": "forecast-reset",
+      "title_en": "Reset the Forecast",
+      "title_ar": "أعد بناء التوقعات",
+      "summary_en": "Rebuild the forecast, challenge assumptions and explain the gap.",
+      "summary_ar": "أعد بناء التوقعات واختبر الافتراضات واشرح الفجوة.",
+      "category_en": "Forecasting",
+      "category_ar": "التنبؤ المالي",
+      "difficulty_en": "Advanced",
+      "difficulty_ar": "متقدم",
+      "tags": [
+        "Forecast",
+        "Scenario",
+        "FP&A"
+      ]
+    },
+    {
+      "slug": "business-performance-review",
+      "title_en": "Business Performance Review",
+      "title_ar": "مراجعة أداء الأعمال",
+      "summary_en": "Create an analyst-style performance review from business data.",
+      "summary_ar": "أنشئ مراجعة أداء بأسلوب المحلل المالي من بيانات الأعمال.",
+      "category_en": "Business Performance",
+      "category_ar": "أداء الأعمال",
+      "difficulty_en": "Intermediate",
+      "difficulty_ar": "متوسط",
+      "tags": [
+        "KPIs",
+        "Performance",
+        "Analysis"
+      ],
+      "published": true
+    }
+  ]
+}

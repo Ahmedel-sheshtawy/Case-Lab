@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Lab — Practice Real Financial Analyst Work | by Ahmed Elsheshtawy</title>
+<meta name="description" content="Case Lab is a free training ground for aspiring financial analysts and new grads: realistic finance case studies with an analyst framework and guided self-assessment — by Ahmed Elsheshtawy.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preload" as="image" href="assets/logo-header.png">
+<link rel="icon" type="image/png" sizes="512x512" href="assets/favicon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/favicon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ============ TOKENS — matches ahmedelsheshtawy.com identity exactly ============ */
+:root{
+  --bg:#f4f2ec;
+  --surface:#ebe8df;
+  --surface-2:#dfdbd1;
+  --ink:#0a0a0a;
+  --ink-soft:#5d5b56;
+  --ink-faint:#92908a;
+  --line:#d7d3c9;
+  --accent:#ff4d00;
+  --accent-dark:#d93d00;
+  --accent-soft:#fff0e9;
+  --white:#f8f6f0;
+  --black:#050505;
+  --radius-lg:30px;
+  --radius-md:20px;
+  --radius-sm:12px;
+  --maxw:1240px;
+  --serif:'Space Grotesk', sans-serif;
+  --sans:'Inter', sans-serif;
+  --mono:'IBM Plex Mono', monospace;
+}
+:root[data-theme="dark"]{
+  --bg:#0d0d0d; --surface:#161616; --surface-2:#1e1e1e; --ink:#f2efe9; --ink-soft:#a8a49b;
+  --ink-faint:#726e66; --line:#2a2a2a; --white:#161616; --accent-soft:#26170f;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+html[lang="ar"] body{font-family:'Cairo', var(--sans);}
+body{background:var(--bg); color:var(--ink); font-family:var(--sans); line-height:1.5; -webkit-font-smoothing:antialiased; overflow-x:hidden; transition:background .3s,color .3s;}
+img,svg{display:block; max-width:100%;}
+a{color:inherit; text-decoration:none;}
+ul{list-style:none;}
+button{font-family:inherit; cursor:pointer; border:none; background:none;}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 32px;}
+@media(max-width:768px){.wrap{padding:0 20px;}}
+h1,h2,h3,h4{font-family:var(--serif); font-weight:700; color:var(--ink);}
+html[lang="ar"] h1,html[lang="ar"] h2,html[lang="ar"] h3,html[lang="ar"] h4{font-family:'Cairo', var(--sans); letter-spacing:0 !important;}
+:focus-visible{outline:2px solid var(--accent); outline-offset:3px;}
+
+.eyebrow{font-family:var(--mono); font-size:12px; letter-spacing:.08em; color:var(--accent); text-transform:uppercase; font-weight:600; display:inline-flex; align-items:center; gap:8px; margin-bottom:16px;}
+html[lang="ar"] .eyebrow{font-family:var(--sans); font-weight:700;}
+.eyebrow::before{content:""; width:16px; height:1px; background:var(--accent);}
+.section-head{max-width:640px; margin-bottom:52px;}
+.section-head h2{font-size:clamp(36px,5vw,58px); letter-spacing:-.045em; line-height:1.0;}
+html[lang="ar"] .section-head h2{letter-spacing:normal; line-height:1.3;}
+.section-head p{color:var(--ink-soft); font-size:16px; margin-top:16px; max-width:540px;}
+section{padding:110px 0;}
+@media(max-width:768px){section{padding:70px 0;}}
+.icon-arrow{font-size:1.05em; line-height:1; display:inline-block;}
+html[dir="rtl"] .icon-arrow{display:inline-block; transform:scaleX(-1);}
+
+/* ============ HEADER (same design as the main portfolio) ============ */
+header#site-header{position:sticky; top:0; z-index:100; padding:20px 0; color:#fff; background:rgba(5,5,5,.88); backdrop-filter:blur(18px); box-shadow:0 1px 0 rgba(255,255,255,.09);}
+nav{display:flex; align-items:center; justify-content:space-between; gap:20px;}
+.brand{display:flex; align-items:center; gap:10px; font-family:var(--serif); font-weight:700; font-size:16px; color:#fff; letter-spacing:-.03em;}
+html[lang="ar"] .brand{font-family:'Cairo', var(--sans);}
+.brand-mark{width:40px; height:40px; border-radius:9px; background:var(--accent); color:var(--black); display:flex; align-items:center; justify-content:center; font-weight:900; flex-shrink:0; overflow:hidden;}
+.nav-links{display:flex; align-items:center; gap:32px; font-size:14px; color:rgba(255,255,255,.66);}
+.nav-links a:hover{color:#fff;}
+.util-toggles{display:flex; align-items:center; gap:8px;}
+.lang-toggle,.theme-toggle{display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:50%; border:1px solid rgba(255,255,255,.2); color:#fff; background:rgba(255,255,255,.06); font-family:var(--mono); font-size:12px; font-weight:700;}
+.lang-toggle:hover,.theme-toggle:hover{background:rgba(255,255,255,.16); border-color:var(--accent);}
+.theme-toggle .icon-moon{display:none;}
+[data-theme="dark"] .theme-toggle .icon-sun{display:none;}
+[data-theme="dark"] .theme-toggle .icon-moon{display:inline-block;}
+.nav-cta{background:#fff; color:#050505; border-radius:999px; padding:12px 19px; font-size:14px; font-weight:700; display:inline-flex; align-items:center; gap:8px;}
+.nav-cta:hover{background:var(--accent); color:#050505;}
+.menu-btn{display:none; color:#fff; font-size:22px;}
+@media(max-width:900px){ .nav-links,.nav-cta{display:none;} .menu-btn{display:block;} }
+.mobile-menu{position:fixed; inset:0; background:#050505; color:#fff; z-index:200; padding:24px; display:none; flex-direction:column; gap:22px;}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{font-size:20px; font-family:var(--serif); font-weight:600; border-bottom:1px solid #222; padding-bottom:14px;}
+.mobile-menu .nav-cta{color:#050505; background:#fff; justify-content:center; width:100%; margin-top:6px;}
+.mobile-close{align-self:flex-end; font-size:26px;}
+
+/* ============ CASES (identical treatment to the "Selected Work" project cards) ============ */
+#cases{background:var(--bg);}
+.cases-grid{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px;}
+@media(max-width:900px){.cases-grid{grid-template-columns:1fr;}}
+.case-card{display:grid; grid-template-columns:1fr; border-radius:22px; overflow:hidden; background:#0b0b0b; color:#fff; min-height:460px; transition:transform .35s,box-shadow .35s;}
+.case-card:hover{transform:translateY(-5px); box-shadow:0 30px 70px rgba(0,0,0,.16);}
+.case-visual{background:linear-gradient(145deg,#151515,#070707); min-height:230px; padding:30px; position:relative; overflow:hidden; display:flex; align-items:flex-end;}
+.case-visual::before{content:""; position:absolute; width:280px; height:280px; border:1px solid rgba(255,77,0,.35); border-radius:50%; right:-90px; top:-90px;}
+.case-visual::after{content:attr(data-index); position:absolute; left:30px; top:22px; color:rgba(255,255,255,.15); font:500 12px var(--mono);}
+.case-visual .badge-row{display:flex; gap:8px; flex-wrap:wrap; position:relative; z-index:1;}
+.badge{font-family:var(--mono); font-size:11px; letter-spacing:.04em; text-transform:uppercase; padding:6px 12px; border-radius:100px; border:1px solid rgba(255,255,255,.22); color:rgba(255,255,255,.85);}
+html[lang="ar"] .badge{font-family:var(--sans); font-weight:600;}
+.badge.badge-accent{background:var(--accent); color:#050505; border-color:transparent; font-weight:700;}
+.case-body{padding:30px; background:#0b0b0b;}
+.case-cat{font-family:var(--mono); font-size:11.5px; letter-spacing:.04em; color:var(--accent); text-transform:uppercase; margin-bottom:12px; display:block;}
+html[lang="ar"] .case-cat{font-family:var(--sans); font-weight:700;}
+.case-body h3{color:#fff; font-size:clamp(22px,2.4vw,28px); line-height:1.15; letter-spacing:-.03em; margin-bottom:12px;}
+html[lang="ar"] .case-body h3{letter-spacing:0;}
+.case-body p{color:rgba(255,255,255,.56); font-size:14.5px; margin-bottom:20px; max-width:520px;}
+.tag-row{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:24px;}
+.tag{font-size:12px; color:rgba(255,255,255,.65); border:1px solid rgba(255,255,255,.16); padding:6px 12px; border-radius:100px;}
+.case-link{display:inline-flex; align-items:center; gap:8px; font-weight:600; font-size:14.5px; color:#fff;}
+.case-link:hover{color:var(--accent);}
+.cases-empty{padding:60px 0; text-align:center; color:var(--ink-faint);}
+
+/* ============ APPROACH / GOALS (identical treatment to the "My Approach" section) ============ */
+#approach{background:#f4f2ec;}
+[data-theme="dark"] #approach{background:var(--bg);}
+.approach-list{border-top:1px solid var(--line);}
+.approach-item{display:grid; grid-template-columns:110px 1fr 1fr; gap:25px; padding:38px 0; align-items:center; border-bottom:1px solid var(--line); transition:padding .3s;}
+.approach-item:hover{padding-left:15px; padding-right:15px; background:rgba(255,255,255,.45);}
+[data-theme="dark"] .approach-item:hover{background:rgba(255,255,255,.04);}
+@media(max-width:800px){.approach-item{grid-template-columns:1fr; gap:10px; padding:28px 0;}}
+.approach-num{font-size:16px; color:var(--accent); font-family:var(--mono); font-weight:700;}
+.approach-item h3{font-size:clamp(26px,3.4vw,44px); letter-spacing:-.045em; line-height:1.05;}
+html[lang="ar"] .approach-item h3{letter-spacing:0;}
+.approach-item p{font-size:14px; color:var(--ink-soft); max-width:440px;}
+
+/* ============ FOOTER ============ */
+footer{padding:60px 0 32px; border-top:1px solid var(--line);}
+.footer-grid{display:flex; justify-content:space-between; flex-wrap:wrap; gap:24px; margin-bottom:34px; align-items:center;}
+.footer-brand{display:flex; align-items:center; gap:10px; font-family:var(--serif); font-weight:700; font-size:15px;}
+html[lang="ar"] .footer-brand{font-family:'Cairo', var(--sans);}
+.footer-brand .brand-mark{width:32px; height:32px; color:var(--ink);}
+.footer-social{display:flex; gap:10px; flex-wrap:wrap;}
+.social-btn{display:inline-flex; align-items:center; gap:7px; border:1px solid var(--line); border-radius:100px; padding:8px 14px; font-size:13px; color:var(--ink-soft); transition:border-color .2s,color .2s;}
+.social-btn:hover{border-color:var(--accent); color:var(--accent);}
+.footer-bottom{display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; padding-top:22px; border-top:1px solid var(--line); font-size:13px; color:var(--ink-faint);}
+
+.reveal{opacity:0; transform:translateY(18px); transition:opacity .6s ease,transform .6s ease;}
+.reveal.in{opacity:1; transform:none;}
+</style>
+<meta name="theme-color" content="#050505"><script>if("serviceWorker" in navigator){navigator.serviceWorker.register("/sw.js").catch(function(){});}</script></head>
+<body>
+
+<header id="site-header">
+  <div class="wrap">
+    <nav>
+      <a href="#home" class="brand">
+        <span class="brand-mark"><img src="assets/logo-header.png" alt="" style="width:100%;height:100%;object-fit:contain;"></span>
+        <span data-i18n="brand.name">Case Lab</span>
+      </a>
+      <div class="nav-links">
+        <a href="#cases" data-i18n="nav.cases">Cases</a>
+        <a href="#approach" data-i18n="nav.approach">Our Approach</a>
+      </div>
+      <div class="util-toggles">
+        <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language">AR</button>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode"><span class="icon-sun">☀</span><span class="icon-moon">☾</span></button>
+      </div>
+      <button class="nav-cta" id="installApp" type="button">Install App</button>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu"><span>☰</span></button>
+    </nav>
+  </div>
+</header>
+
+<main id="home">
+
+  <!-- CASES (same visual treatment as the portfolio's project cards) -->
+  <section id="cases">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow" data-i18n="cases.eyebrow">Case Lab</p>
+        <h2 data-i18n="cases.h2">Practice cases built like real analyst work.</h2>
+        <p data-i18n="cases.sub">A free training ground for aspiring financial analysts and new grads — realistic scenarios, not textbook problems.</p>
+      </div>
+      <div class="cases-grid" id="casesGrid"></div>
+    </div>
+  </section>
+
+  <!-- APPROACH / GOALS (same treatment as the portfolio's approach section) -->
+  <section id="approach">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow" data-i18n="approach.eyebrow">Our Approach</p>
+        <h2 data-i18n="approach.h2">How we help you think like an analyst.</h2>
+      </div>
+      <div class="approach-list reveal">
+        <div class="approach-item"><span class="approach-num">01</span><div><h3 data-i18n="approach.i1h">Real Scenarios</h3></div><p data-i18n="approach.i1p">Every case is grounded in an actual business situation, written the way real requests land on an analyst's desk — not an abstract textbook problem.</p></div>
+        <div class="approach-item"><span class="approach-num">02</span><div><h3 data-i18n="approach.i2h">An Analyst's Framework</h3></div><p data-i18n="approach.i2p">Each case comes with the step-by-step thinking a senior analyst would actually use — so you learn the process, not just the final number.</p></div>
+        <div class="approach-item"><span class="approach-num">03</span><div><h3 data-i18n="approach.i3h">Self-Assessment</h3></div><p data-i18n="approach.i3p">Work the case on your own first, then reveal the guided solution outline to check your reasoning and spot what you missed.</p></div>
+        <div class="approach-item"><span class="approach-num">04</span><div><h3 data-i18n="approach.i4h">Free, Always Growing</h3></div><p data-i18n="approach.i4p">Case Lab stays free for anyone starting out in finance, with new cases added over time across valuation, FP&amp;A, and modeling.</p></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="brand-mark"><img src="assets/logo-header.png" alt="" style="width:100%;height:100%;object-fit:contain;"></span>
+        <span data-i18n="brand.name">Case Lab</span>
+      </div>
+      <div class="footer-social">
+        <a href="mailto:ahmedelsheshtawyofficial@gmail.com" class="social-btn" aria-label="Email">Email</a>
+        <a href="https://linkedin.com/in/ahmedelsheshtawyofficial/" target="_blank" rel="noopener" class="social-btn" aria-label="LinkedIn">LinkedIn</a>
+        <a href="https://ahmedelsheshtawy.com" class="social-btn" aria-label="Portfolio" data-i18n="footer.portfolio">Portfolio</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span data-i18n="footer.rights">© 2026 Ahmed Elsheshtawy. Case Lab — All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose">✕</button>
+  <a href="#cases" data-i18n="nav.cases">Cases</a>
+  <a href="#approach" data-i18n="nav.approach">Our Approach</a>
+  <a href="https://ahmedelsheshtawy.com" class="nav-cta" data-i18n="nav.portfolio">Main Portfolio</a>
+  <div class="util-toggles">
+    <button class="lang-toggle" id="langToggleMobile" type="button">AR</button>
+    <button class="theme-toggle" id="themeToggleMobile" type="button"><span class="icon-sun">☀</span><span class="icon-moon">☾</span></button>
+  </div>
+</div>
+
+<script>
+var translations = {
+  'brand.name': {en:'Case Lab', ar:'كيس لاب'},
+  'nav.cases': {en:'Cases', ar:'الحالات'},
+  'nav.approach': {en:'Our Approach', ar:'طريقة عملنا'},
+  'nav.portfolio': {en:'Main Portfolio', ar:'البورتفوليو الرئيسي'},
+  'cases.eyebrow': {en:'Case Lab', ar:'كيس لاب'},
+  'cases.h2': {en:'Practice cases built like real analyst work.', ar:'حالات تدريبية مبنية بنفس طريقة شغل المحلل الحقيقي.'},
+  'cases.sub': {en:'A free training ground for aspiring financial analysts and new grads — realistic scenarios, not textbook problems.', ar:'مساحة تدريب مجانية لكل مهتم بمجال التحليل المالي والخريجين الجدد — سيناريوهات واقعية مش مسائل من كتاب.'},
+  'case.start': {en:'Start Case', ar:'ابدأ الحالة'},
+  'approach.eyebrow': {en:'Our Approach', ar:'طريقة عملنا'},
+  'approach.h2': {en:'How we help you think like an analyst.', ar:'إزاي بنساعدك تفكر بعقلية المحلل.'},
+  'approach.i1h': {en:'Real Scenarios', ar:'سيناريوهات واقعية'},
+  'approach.i1p': {en:"Every case is grounded in an actual business situation, written the way real requests land on an analyst's desk — not an abstract textbook problem.", ar:'كل حالة مبنية على موقف عمل حقيقي، ومكتوبة بنفس الطريقة اللي بتوصل بيها الطلبات لمكتب المحلل فعليًا — مش مسألة نظرية من كتاب.'},
+  'approach.i2h': {en:"An Analyst's Framework", ar:'إطار عمل المحلل'},
+  'approach.i2p': {en:'Each case comes with the step-by-step thinking a senior analyst would actually use — so you learn the process, not just the final number.', ar:'كل حالة معاها خطوات التفكير اللي المحلل الأول بيستخدمها فعليًا — عشان تتعلم الأسلوب مش الرقم النهائي بس.'},
+  'approach.i3h': {en:'Self-Assessment', ar:'تقييم ذاتي'},
+  'approach.i3p': {en:'Work the case on your own first, then reveal the guided solution outline to check your reasoning and spot what you missed.', ar:'حل الحالة بنفسك الأول، وبعدين اكشف الحل الموجّه عشان تراجع تفكيرك وتشوف إيه اللي فاتك.'},
+  'approach.i4h': {en:'Free, Always Growing', ar:'مجاني وفي تطوير مستمر'},
+  'approach.i4p': {en:'Case Lab stays free for anyone starting out in finance, with new cases added over time across valuation, FP&A, and modeling.', ar:'كيس لاب هيفضل مجاني لأي حد بادئ في مجال المالية، ومع الوقت هتتضاف حالات جديدة في التقييم، التخطيط المالي، والنمذجة.'},
+  'footer.portfolio': {en:'Portfolio', ar:'البورتفوليو'},
+  'footer.rights': {en:'© 2026 Ahmed Elsheshtawy. Case Lab — All rights reserved.', ar:'© 2026 أحمد الششتاوي. كيس لاب — جميع الحقوق محفوظة.'}
+};
+
+var currentLang='en', currentTheme='light';
+
+function detectLang(){var s=null;try{s=localStorage.getItem('site-lang');}catch(e){} if(s==='en'||s==='ar')return s; var nav=(navigator.language||'en').toLowerCase(); return nav.indexOf('ar')===0?'ar':'en';}
+function detectTheme(){var s=null;try{s=localStorage.getItem('site-theme');}catch(e){} if(s==='light'||s==='dark')return s; return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';}
+function applyLang(lang){
+  currentLang=lang;
+  var html=document.documentElement;
+  html.setAttribute('lang', lang==='ar'?'ar':'en');
+  html.setAttribute('dir', lang==='ar'?'rtl':'ltr');
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var key=el.getAttribute('data-i18n'); var entry=translations[key];
+    if(!entry) return;
+    el.textContent = entry[lang]!=null?entry[lang]:entry.en;
+  });
+  var otherLabel = lang==='ar'?'EN':'AR';
+  ['langToggle','langToggleMobile'].forEach(function(id){var b=document.getElementById(id); if(b) b.textContent=otherLabel;});
+  try{localStorage.setItem('site-lang',lang);}catch(e){}
+  renderCases();
+}
+function applyTheme(theme){currentTheme=theme; document.documentElement.setAttribute('data-theme',theme); try{localStorage.setItem('site-theme',theme);}catch(e){}}
+
+var CASES=[];
+function renderCases(){
+  var grid=document.getElementById('casesGrid');
+  if(!grid) return;
+  if(!CASES.length){grid.innerHTML='<div class="cases-empty">'+(currentLang==='ar'?'الحالات قريبًا...':'Cases coming soon...')+'</div>'; return;}
+  var lang=currentLang;
+  grid.innerHTML=CASES.map(function(c,i){
+    var title=lang==='ar'?c.title_ar:c.title_en;
+    var summary=lang==='ar'?c.summary_ar:c.summary_en;
+    var category=lang==='ar'?c.category_ar:c.category_en;
+    var difficulty=lang==='ar'?c.difficulty_ar:c.difficulty_en;
+    var tags=(c.tags||[]).slice(0,4).map(function(t){return '<span class="tag">'+t+'</span>';}).join('');
+    var startLabel=translations['case.start'][lang];
+    var arrow = lang==='ar' ? '←' : '↗';
+    return '<a class="case-card" href="/case/'+c.slug+'">'+
+      '<div class="case-visual" data-index="'+String(i+1).padStart(2,'0')+'"><div class="badge-row"><span class="badge badge-accent">'+difficulty+'</span></div></div>'+
+      '<div class="case-body">'+
+        '<span class="case-cat">'+category+'</span>'+
+        '<h3>'+title+'</h3>'+
+        '<p>'+summary+'</p>'+
+        '<div class="tag-row">'+tags+'</div>'+
+        '<span class="case-link">'+startLabel+' <span class="icon-arrow">'+arrow+'</span></span>'+
+      '</div>'+
+    '</a>';
+  }).join('');
+}
+
+function loadCases(){
+  var seed=[{"slug": "revenue-under-pressure", "title_en": "Revenue Under Pressure", "title_ar": "الإيرادات تحت الضغط", "summary_en": "Diagnose a revenue slowdown, identify the key drivers, and build a management-ready view.", "summary_ar": "حلل تباطؤ الإيرادات وحدد المحركات الرئيسية وابنِ رؤية مناسبة للإدارة.", "category_en": "Revenue Analysis", "category_ar": "تحليل الإيرادات", "difficulty_en": "Intermediate", "difficulty_ar": "متوسط", "tags": ["Revenue", "Drivers", "Analysis", "FP&A"], "published": true}, {"slug": "profitability-deep-dive", "title_en": "Profitability Deep Dive", "title_ar": "تحليل الربحية بعمق", "summary_en": "Sales are growing, but profit is not. Find the real margin drivers.", "summary_ar": "المبيعات تنمو لكن الأرباح لا تتحرك بنفس الشكل. اكتشف الأسباب.", "category_en": "Profitability", "category_ar": "الربحية", "difficulty_en": "Intermediate", "difficulty_ar": "متوسط", "tags": ["Margins", "Profitability", "Excel"], "published": true}, {"slug": "build-the-fpa-plan", "title_en": "Build the FP&A Plan", "title_ar": "ابنِ خطة FP&A", "summary_en": "Build a planning view from assumptions, budgets and forecasts.", "summary_ar": "ابنِ رؤية تخطيطية من الافتراضات والميزانية والتوقعات.", "category_en": "FP&A", "category_ar": "التخطيط المالي", "difficulty_en": "Advanced", "difficulty_ar": "متقدم", "tags": ["FP&A", "Budget", "Forecast"], "published": true}, {"slug": "variance-analysis", "title_en": "The Variance Story", "title_ar": "قصة الانحرافات", "summary_en": "Turn actual-vs-budget variance into a management-ready analysis.", "summary_ar": "حوّل انحرافات الفعلي مقابل الموازنة إلى تحليل مناسب للإدارة.", "category_en": "Management Reporting", "category_ar": "تقارير الإدارة", "difficulty_en": "Beginner", "difficulty_ar": "مبتدئ", "tags": ["Variance", "Reporting", "Budget"], "published": true}, {"slug": "forecast-reset", "title_en": "Reset the Forecast", "title_ar": "أعد بناء التوقعات", "summary_en": "Rebuild the forecast, challenge assumptions and explain the gap.", "summary_ar": "أعد بناء التوقعات واختبر الافتراضات واشرح الفجوة.", "category_en": "Forecasting", "category_ar": "التنبؤ المالي", "difficulty_en": "Advanced", "difficulty_ar": "متقدم", "tags": ["Forecast", "Scenario", "FP&A"]}, {"slug": "business-performance-review", "title_en": "Business Performance Review", "title_ar": "مراجعة أداء الأعمال", "summary_en": "Create an analyst-style performance review from business data.", "summary_ar": "أنشئ مراجعة أداء بأسلوب المحلل المالي من بيانات الأعمال.", "category_en": "Business Performance", "category_ar": "أداء الأعمال", "difficulty_en": "Intermediate", "difficulty_ar": "متوسط", "tags": ["KPIs", "Performance", "Analysis"], "published": true}];
+  try{var saved=localStorage.getItem('case-lab-cases');CASES=saved?JSON.parse(saved):seed;}
+  catch(e){CASES=seed;}
+  CASES=(CASES||[]).filter(function(c){return c.published!==false;});
+  renderCases();
+}
+loadCases();
+
+document.addEventListener('DOMContentLoaded', function(){
+  applyLang(detectLang());
+  applyTheme(detectTheme());
+
+  ['langToggle','langToggleMobile'].forEach(function(id){
+    var b=document.getElementById(id);
+    if(b) b.addEventListener('click', function(){ applyLang(currentLang==='ar'?'en':'ar'); });
+  });
+  ['themeToggle','themeToggleMobile'].forEach(function(id){
+    var b=document.getElementById(id);
+    if(b) b.addEventListener('click', function(){ applyTheme(currentTheme==='dark'?'light':'dark'); });
+  });
+
+  var menuBtn=document.getElementById('menuBtn'), mobileMenu=document.getElementById('mobileMenu'), mobileClose=document.getElementById('mobileClose');
+  if(menuBtn) menuBtn.addEventListener('click', function(){ mobileMenu.classList.add('open'); });
+  if(mobileClose) mobileClose.addEventListener('click', function(){ mobileMenu.classList.remove('open'); });
+  mobileMenu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ mobileMenu.classList.remove('open'); }); });
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('in'); });
+  }, {threshold:.12});
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+});
+</script>
+</body>
+</html>
+<script>
+(function(){
+var deferred;
+window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferred=e;});
+document.addEventListener('click',function(e){
+ var b=e.target.closest&&e.target.closest('#installApp'); if(!b)return;
+ if(deferred){deferred.prompt();deferred.userChoice.finally(function(){deferred=null;});}
+ else {alert('Use your browser menu and choose Install Case Lab / Add to Home Screen.');}
+});
+})();
+</script>
