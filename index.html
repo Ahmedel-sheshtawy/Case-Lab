@@ -336,6 +336,7 @@ function applyTheme(theme){currentTheme=theme; document.documentElement.setAttri
 var CASES=[];
 function esc(v){return String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
 function fileName(u){try{return decodeURIComponent(new URL(u,location.href).pathname.split('/').pop()||'File');}catch(e){return String(u||'').split('/').pop()||'File';}}
+function isImageUrl(u){var x=String(u||'').trim();if(!x)return false;try{var url=new URL(x,location.href),path=url.pathname.toLowerCase();if(/\.(png|jpe?g|webp|gif|svg|avif|bmp|ico)$/.test(path))return true;var host=url.hostname.toLowerCase();return /(^|\.)((images?|img|i)\.)?catbox\.moe$/.test(host)||host.includes('imgur.com')||host.includes('cloudinary.com')||host.includes('imagekit.io')||host.includes('images.unsplash.com');}catch(e){return /\.(png|jpe?g|webp|gif|svg|avif|bmp|ico)(\?.*)?$/i.test(x);}}
 function fileType(u){var n=fileName(u).toLowerCase();if(/\.xlsx?$/.test(n))return 'Excel';if(/\.pdf$/.test(n))return 'PDF';if(/\.pptx?$/.test(n))return 'PowerPoint';if(/\.docx?$/.test(n))return 'Word';if(/\.(zip|rar|7z)$/.test(n))return 'Archive';return 'File';}
 function caseText(c,key){var lang=currentLang;var v=lang==='ar'?c[key+'_ar']:c[key+'_en'];return String(v||'').trim();}
 function openCase(c){
@@ -350,7 +351,7 @@ function openCase(c){
   var hints=caseText(c,'hints');
   var solution=caseText(c,'solution');
   var files=Array.isArray(c.files)?c.files.filter(Boolean):[];
-  var imageFiles=files.filter(function(u){return /\.(png|jpe?g|webp|gif|svg)(\?.*)?$/i.test(String(u));});
+  var imageFiles=files.filter(isImageUrl);
   var image1=c.model_image_url||c.image_url||imageFiles[0]||'';
   function fallbackText(){return ar?'تفاصيل الحالة ستظهر هنا عند إضافتها من لوحة التحكم.':'Case details will appear here when added from the dashboard.';}
   function fileSizeLabel(u){
@@ -362,7 +363,7 @@ function openCase(c){
     var t=fileType(u); return t==='Excel'?'▦':(t==='PDF'?'▤':(t==='Word'?'▤':(t==='PowerPoint'?'▥':'↗')));
   }
   function fileRows(){
-    var docs=files.filter(function(u){return String(u)!==String(image1)&&!/\.(png|jpe?g|webp|gif|svg)(\?.*)?$/i.test(String(u));});
+    var docs=files.filter(function(u){return String(u)!==String(image1)&&!isImageUrl(u);});
     if(!docs.length)return '<div class="case-no-files">'+(ar?'لا توجد ملفات مرفقة':'No files attached')+'</div>';
     return '<div class="case-file-list">'+docs.slice(0,4).map(function(u){
       var name=fileName(u),type=fileType(u),size=fileSizeLabel(u);
@@ -374,7 +375,7 @@ function openCase(c){
     }).join('')+'</div>';
   }
   function imagePanel(){
-    if(image1)return '<div class="case-panel"><div class="case-panel-head"><span>'+(ar?'نظرة على الحالة':'CASE OVERVIEW')+'</span><span>01</span></div><div class="case-asset"><div class="case-image-frame"><img src="'+esc(image1)+'" alt="'+esc(title)+'" loading="lazy"></div></div></div>';
+    if(image1)return '<div class="case-panel"><div class="case-panel-head"><span>'+(ar?'نظرة على الحالة':'CASE OVERVIEW')+'</span><span>01</span></div><div class="case-asset"><div class="case-image-frame"><img src="'+esc(image1)+'" alt="'+esc(title)+'" loading="lazy" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'<div style=\'padding:24px;color:#777;font:500 11px var(--mono);text-align:center\'>Image unavailable — check the direct image URL in the dashboard.</div>\'"></div></div></div>';
     return '<div class="case-panel"><div class="case-panel-head"><span>'+(ar?'نظرة على الحالة':'CASE OVERVIEW')+'</span><span>01</span></div><div class="case-asset"><div class="case-image-frame"><div style="padding:24px;color:#777;font:500 11px var(--mono);text-align:center">'+esc(fallbackText())+'</div></div></div></div>';
   }
   var casePath='/case/'+encodeURIComponent(c.slug);
@@ -402,6 +403,8 @@ function openCase(c){
       '</div>'+ 
     '</div>'+ 
     '<div class="case-share-bottom"><button type="button" id="caseShareBottom">↗ '+shareText+'</button></div>';
+  var caseImg=box.querySelector('.case-image-frame img');
+  if(caseImg){caseImg.addEventListener('error',function(){this.style.display='none';var holder=this.parentElement;if(holder)holder.innerHTML='<div style="padding:24px;color:#777;font:500 11px var(--mono);text-align:center">'+(ar?'تعذر تحميل صورة الحالة — استخدم رابط صورة مباشر.':'Image unavailable — use a direct image URL in the dashboard.')+'</div>';});}
   overlay.classList.add('open');overlay.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';
   function copyCaseLink(btn){
     var url=location.origin+casePath;
