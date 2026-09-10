@@ -1,0 +1,1 @@
+const CACHE='case-lab-v1';self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(['/','/admin.html','/manifest.webmanifest','/assets/logo-header.png']))));self.addEventListener('fetch',e=>e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request))));
